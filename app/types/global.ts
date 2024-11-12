@@ -8,7 +8,12 @@ export type NavigationTypes =
   | "new"
   | "slots"
   | "live"
-  | "jackpots";
+  | "jackpots"
+  | "sports"
+  | "invite"
+  | "casino live"
+  | "cashier"
+  | "favorites";
 
 export type CategoriesType = NavigationTypes;
 

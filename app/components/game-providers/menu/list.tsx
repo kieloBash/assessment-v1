@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import clsx from 'clsx';
+import LoaderTemplate from '../../loading';
 
 
 const GameProviderMenuList = () => {
@@ -31,22 +32,24 @@ const GameProviderMenuList = () => {
 
     return (
         <div className="bg-primary-foreground w-full h-[28rem] overflow-y-auto">
-            <div className="w-full grid grid-cols-2 grid-flow-row gap-2 p-2">
-                {allProviders.data?.payload.map((provider) => {
-                    const active = filter.includes(provider.id);
-                    const activeClassName = clsx("relative border bg-muted-foreground/20 rounded h-10", active ? "border-primary" : "border-none")
-                    return (
-                        <button
-                            onClick={() => {
-                                if (active) handleFilterChange(provider.id, "remove")
-                                else handleFilterChange(provider.id, "add")
-                            }}
-                            className={activeClassName} key={provider.id}>
-                            <Image src={provider.logo} alt={provider.name} fill className='object-contain' />
-                        </button>
-                    )
-                })}
-            </div>
+            {allProviders.isLoading ? <LoaderTemplate /> :
+                <div className="w-full grid grid-cols-2 grid-flow-row gap-2 p-2">
+                    {allProviders.data?.payload.map((provider) => {
+                        const active = filter.includes(provider.id);
+                        const activeClassName = clsx("relative border bg-muted-foreground/20 rounded h-10", active ? "border-primary" : "border-none")
+                        return (
+                            <button
+                                onClick={() => {
+                                    if (active) handleFilterChange(provider.id, "remove")
+                                    else handleFilterChange(provider.id, "add")
+                                }}
+                                className={activeClassName} key={provider.id}>
+                                <Image src={provider.logo} alt={provider.name} fill className='object-contain' />
+                            </button>
+                        )
+                    })}
+                </div>
+            }
         </div>
     )
 }
