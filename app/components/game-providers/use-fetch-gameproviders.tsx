@@ -24,12 +24,16 @@ const fetchData = async ({ page = default_page, limit = default_limit, searchFil
         }, 3000);
     })
 
+
+    const filteredData = searchFilter
+        ? data.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase()))
+        : data;
+
     const skip = (page - 1) * limit;
+    const paginatedData = filteredData.slice(skip, skip + limit);
 
-    if (searchFilter === "") return { payload: data.splice(skip, limit) ?? [], totalPages: data.length / limit }
+    return { payload: paginatedData ?? [], totalPages: filteredData.length / limit };
 
-    const newData = data.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase())) ?? []
-    return { payload: newData.splice(skip, limit), totalPages: newData.length / limit }
 }
 
 const useFetchGameProviders = ({ page = default_page, limit = default_limit, searchFilter = "" }: FetchProps) => {

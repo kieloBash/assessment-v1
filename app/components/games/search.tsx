@@ -11,7 +11,7 @@ const Search = () => {
 
     const searchFilter = searchParams.get("search") || "";
     const [searchTerm, setSearchTerm] = useState(searchFilter);
-    const debouncedSearchTerm = useDebounce(searchTerm, 300);
+    const debouncedSearchTerm = useDebounce(searchTerm, 1000);
 
     const handleClear = () => {
         setSearchTerm("")

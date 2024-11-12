@@ -21,15 +21,18 @@ const fetchData = async ({ page = default_page, limit = default_limit, searchFil
         setTimeout(() => {
             res(DUMMY_GAMES_DATA);
         }, 3000);
-    })
+    });
+
+    const filteredData = searchFilter
+        ? data.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase()))
+        : data;
 
     const skip = (page - 1) * limit;
+    const paginatedData = filteredData.slice(skip, skip + limit);
 
-    if (searchFilter === "") return { payload: data.splice(skip, limit) ?? [] }
-    return {
-        payload: data?.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase())) ?? []
-    }
-}
+    return { payload: paginatedData ?? [] };
+};
+
 
 const useFetchGames = ({ page = default_page, limit = default_limit, searchFilter = "" }: FetchProps) => {
 
