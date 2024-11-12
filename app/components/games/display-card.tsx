@@ -10,7 +10,7 @@ interface IProps {
 }
 const DisplayCard = ({ data: { id, name, image, providerId }, type = "default" }: IProps) => {
     return (
-        <div className="rounded-sm shadow aspect-square relative overflow-hidden">
+        <div className="rounded shadow aspect-square relative overflow-hidden">
             {type === "hasStar" && (
                 <button type='button'>
                     <Star className='size-5 absolute top-1 right-1 z-10 text-primary-foreground shadow-sm' />

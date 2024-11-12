@@ -14,8 +14,9 @@ export type CategoriesType = NavigationTypes;
 
 export interface GameProviderType {
   id: string;
+  juego: number;
   name: string;
-  logo: string;
+  logo: any;
 }
 
 export interface GameType {

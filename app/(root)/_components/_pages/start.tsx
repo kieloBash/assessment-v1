@@ -1,6 +1,6 @@
 'use client'
 import DisplayCard from '@/app/components/games/display-card';
-import useFetchGames from '@/app/components/games/useFetchGames'
+import useFetchGames from '@/app/components/games/use-fetch-games'
 import LoaderTemplate from '@/app/components/loading';
 
 import React from 'react'
