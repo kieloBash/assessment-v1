@@ -2,7 +2,6 @@
 import DUMMY_GAME_PROVIDERS_DATA from "@/app/data/game-providers";
 import { GameProviderType } from "@/app/types/global";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { useMemo } from "react";
 
 const default_page = 1;
 const default_limit = 5;
@@ -15,17 +14,22 @@ interface FetchProps {
 
 interface ApiResponse {
     payload: GameProviderType[];
+    totalPages: number;
 }
 
 const fetchData = async ({ page = default_page, limit = default_limit, searchFilter = "" }: FetchProps) => {
-    console.log(page, limit, searchFilter)
     const data = await new Promise<GameProviderType[]>((res) => {
         setTimeout(() => {
             res(DUMMY_GAME_PROVIDERS_DATA);
         }, 3000);
     })
 
-    return { payload: data };
+    const skip = (page - 1) * limit;
+
+    if (searchFilter === "") return { payload: data.splice(skip, limit) ?? [], totalPages: data.length / limit }
+
+    const newData = data.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase())) ?? []
+    return { payload: newData.splice(skip, limit), totalPages: newData.length / limit }
 }
 
 const useFetchGameProviders = ({ page = default_page, limit = default_limit, searchFilter = "" }: FetchProps) => {
@@ -39,13 +43,10 @@ const useFetchGameProviders = ({ page = default_page, limit = default_limit, sea
         placeholderData: keepPreviousData,
     });
 
-    const filteredData = useMemo(() => {
-        if (searchFilter === "") return data
-        return { payload: data?.payload.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase())) ?? [] }
-    }, [searchFilter])
+
 
     return {
-        data: filteredData,
+        data,
         error,
         isLoading,
         isFetching,
