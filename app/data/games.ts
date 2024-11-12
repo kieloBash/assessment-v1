@@ -15,7 +15,7 @@ const DUMMY_GAMES_DATA: GameType[] = [
   {
     id: "2",
     name: "Aztec Bonus Lines",
-    providerId: "9",
+    providerId: "1",
     category: "jackpots",
     image: aztecBonusLines,
   },

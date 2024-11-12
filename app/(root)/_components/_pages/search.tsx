@@ -19,8 +19,10 @@ const SearchTemplate = () => {
     const page = parseInt(searchParams.get("page") ?? "1", 10);
     const limit = parseInt(searchParams.get("limit") ?? "6", 10);
     const searchFilter = searchParams.get("search") || "";
+    const filter = searchParams.get("filter") ? searchParams.get("filter")?.split(",") : [];
 
-    const games = useFetchGames({ searchFilter })
+
+    const games = useFetchGames({ page: 1, limit: 3, searchFilter, filter })
     const gameProviders = useFetchGameProviders({ page, limit, });
 
     return (

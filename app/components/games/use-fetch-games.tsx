@@ -10,22 +10,25 @@ interface FetchProps {
     page?: number;
     limit?: number
     searchFilter?: string;
+    filter?: string[]
 }
 
 interface ApiResponse {
     payload: GameType[];
 }
 
-const fetchData = async ({ page = default_page, limit = default_limit, searchFilter = "" }: FetchProps) => {
+const fetchData = async ({ page = default_page, limit = default_limit, searchFilter = "", filter = [] }: FetchProps) => {
     const data = await new Promise<GameType[]>((res) => {
         setTimeout(() => {
             res(DUMMY_GAMES_DATA);
         }, 3000);
     });
 
-    const filteredData = searchFilter
+    const searchedFilteredData = searchFilter
         ? data.filter((val) => val.name.toLowerCase().includes(searchFilter.toLowerCase()))
         : data;
+
+    const filteredData = filter.length > 0 ? searchedFilteredData.filter((game) => filter.includes(game.providerId)) : searchedFilteredData
 
     const skip = (page - 1) * limit;
     const paginatedData = filteredData.slice(skip, skip + limit);
@@ -34,12 +37,12 @@ const fetchData = async ({ page = default_page, limit = default_limit, searchFil
 };
 
 
-const useFetchGames = ({ page = default_page, limit = default_limit, searchFilter = "" }: FetchProps) => {
+const useFetchGames = ({ page = default_page, limit = default_limit, searchFilter = "", filter = [] }: FetchProps) => {
 
     const { data, error, isLoading, isFetching, isError } = useQuery<ApiResponse>({
-        queryKey: ["games", page, limit, searchFilter],
+        queryKey: ["games", page, limit, searchFilter, filter],
         queryFn: () =>
-            fetchData({ page, limit, searchFilter }),
+            fetchData({ page, limit, searchFilter, filter }),
         staleTime: 60000 * 10, //10 mins
         refetchOnWindowFocus: false,
         placeholderData: keepPreviousData,
