@@ -3,10 +3,12 @@ import React from 'react'
 
 import { useNavigationContexts } from '../contexts/NavigationsContext'
 
-import { Star } from 'lucide-react'
+import { Dices, LoaderPinwheelIcon, Star, UserPlus2Icon, WalletCardsIcon } from 'lucide-react'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { NavigationTypes } from '../types/global';
+import ActiveBorderIcon from "@/public/fun88/assets/footer/active-border.svg"
+import Image from 'next/image';
 
 const FooterNavigations = () => {
     const router = useRouter();
@@ -15,7 +17,7 @@ const FooterNavigations = () => {
     const { selected: active, setSelected: setActive } = useNavigationContexts()
     const BUTTONS: { icon: any, label: NavigationTypes }[] = [
         {
-            icon: Star,
+            icon: LoaderPinwheelIcon,
             label: "sports"
         },
         {
@@ -23,15 +25,15 @@ const FooterNavigations = () => {
             label: "favorites"
         },
         {
-            icon: Star,
+            icon: UserPlus2Icon,
             label: "invite"
         },
         {
-            icon: Star,
+            icon: Dices,
             label: "casino live"
         },
         {
-            icon: Star,
+            icon: WalletCardsIcon,
             label: "cashier"
         },
     ]
@@ -48,10 +50,15 @@ const FooterNavigations = () => {
     return (
         <>
             {BUTTONS.map((btn) => {
+                const activeBtn = active === btn.label;
+
                 return (
-                    <button onClick={() => handleChangeTabFilter(btn.label)} key={btn.label} type='button' className="gap-1 flex flex-col justify-center items-center">
-                        <btn.icon className='size-6' />
-                        <span className="uppercase text-xs">{btn.label}</span>
+                    <button onClick={() => handleChangeTabFilter(btn.label)} key={btn.label} type='button' className={`relative gap-0.5 flex flex-col justify-center items-center ${activeBtn && "text-primary"}`}>
+                        {activeBtn && (
+                            <Image src={ActiveBorderIcon} className='absolute' alt='border' width={80} height={80} />
+                        )}
+                        <btn.icon className='size-7' />
+                        <span className={`uppercase text-xs ${activeBtn && "text-primary font-medium"}`}>{btn.label}</span>
                     </button>
                 )
             })}

@@ -1,5 +1,5 @@
 'use client'
-import { FireExtinguisherIcon, SearchIcon } from 'lucide-react'
+import { BadgePlusIcon, CoinsIcon, EthernetPortIcon, FireExtinguisherIcon, FlameIcon, SearchIcon, User } from 'lucide-react'
 import React from 'react'
 import { useNavigationContexts } from '../contexts/NavigationsContext'
 import clsx from 'clsx'
@@ -15,23 +15,23 @@ const MainNavigations = () => {
 
     const BUTTONS: { icon: any, label: NavigationTypes }[] = [
         {
-            icon: FireExtinguisherIcon,
+            icon: FlameIcon,
             label: "start",
         },
         {
-            icon: FireExtinguisherIcon,
+            icon: BadgePlusIcon,
             label: "new",
         },
         {
-            icon: FireExtinguisherIcon,
+            icon: EthernetPortIcon,
             label: "slots",
         },
         {
-            icon: FireExtinguisherIcon,
+            icon: User,
             label: "live",
         },
         {
-            icon: FireExtinguisherIcon,
+            icon: CoinsIcon,
             label: "jackpots",
         },
     ]
