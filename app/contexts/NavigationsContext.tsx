@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { NavigationTypes } from "../types/global";
+import { useSearchParams } from 'next/navigation';
 
 type ContextType = {
     selected: NavigationTypes;
@@ -16,7 +17,11 @@ export const useNavigationContexts = () => React.useContext(Context);
 
 const NavigationsProvider = ({ children }: { children: React.ReactNode }) => {
 
-    const [selected, setSelected] = React.useState<NavigationTypes>("start");
+    const searchParams = useSearchParams();
+
+    const tabFilter = (searchParams.get("tab") || "start") as NavigationTypes;
+
+    const [selected, setSelected] = React.useState<NavigationTypes>(tabFilter);
 
     return (
         <Context.Provider

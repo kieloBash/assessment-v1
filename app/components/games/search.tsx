@@ -20,6 +20,7 @@ const Search = () => {
     useEffect(() => {
         const currentParams = new URLSearchParams(Array.from(searchParams.entries()));
         currentParams.set("search", debouncedSearchTerm);
+        currentParams.set("tab", "search");
         // handleResetPage()
 
         router.push(`${pathname}?${currentParams.toString()}`);
