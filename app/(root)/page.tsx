@@ -3,6 +3,8 @@ import Banner from "./_components/banner";
 import BellIcon from "@/public/fun88/assets/bell.svg";
 import MainNavigations from "../components/navigations";
 import Display from "./_components/display";
+import { Suspense } from "react";
+import LoaderTemplate from "../components/loading";
 
 export default function Home() {
   return (
