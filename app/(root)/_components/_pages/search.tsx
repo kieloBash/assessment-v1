@@ -10,6 +10,7 @@ import LoaderTemplate from '@/app/components/loading';
 import useFetchGameProviders from '@/app/components/game-providers/use-fetch-gameproviders';
 import GameProviderHeader from '@/app/components/game-providers/header';
 import GameProvidersList from '@/app/components/game-providers/list';
+import GameProviderMenuButton from '@/app/components/game-providers/menu/button';
 
 const SearchTemplate = () => {
 
@@ -24,8 +25,9 @@ const SearchTemplate = () => {
 
     return (
         <div className="flex flex-col gap-2">
-            <div className="flex gap-2 justify-center items-center">
+            <div className="flex gap-1 justify-center items-center">
                 <Search />
+                <GameProviderMenuButton />
             </div>
             {games.isLoading || games.isFetching ? <LoaderTemplate /> :
                 <div className="grid grid-cols-3 gap-2">
