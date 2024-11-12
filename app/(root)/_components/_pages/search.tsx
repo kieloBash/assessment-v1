@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import useFetchGames from '@/app/components/games/useFetchGames';
 import Search from '@/app/components/games/search';
 import DisplayCard from '@/app/components/games/display-card';
+import LoaderTemplate from '@/app/components/loading';
 
 
 const SearchTemplate = () => {
@@ -22,13 +23,15 @@ const SearchTemplate = () => {
             <div className="flex gap-2 justify-center items-center">
                 <Search />
             </div>
-            <div className="grid grid-cols-3 gap-2">
-                {games.data?.payload.map((game) => {
-                    return (
-                        <DisplayCard data={game} key={game.id} />
-                    )
-                })}
-            </div>
+            {games.isLoading || games.isFetching ? <LoaderTemplate /> :
+                <div className="grid grid-cols-3 gap-2">
+                    {games.data?.payload.map((game) => {
+                        return (
+                            <DisplayCard data={game} key={game.id} type='hasStar' />
+                        )
+                    })}
+                </div>
+            }
         </div>
     )
 }
